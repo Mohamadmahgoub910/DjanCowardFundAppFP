@@ -1,12 +1,13 @@
 {% extends 'main.html' %}
 
 {% block content %}
-    <p>Edit Profile Form </p> 
-    <form method="post" action="{% url 'edit-account' %}">
-        {% csrf_token %}
-        {{form.as_p}}
-        <br><br><br>
-        <input type="submit" name="Edit" value="Edit"><br>
-    </form>
+<p>Edit Profile Form </p>
+<form method="post" action="{% url 'edit-account' %}">
+    {% csrf_token %}
+    {{form.as_p}}
+    <br><br><br>
+    <center>
+        <input type="submit" name="Edit" value="Edit">
+    </center>
+</form>
 {% endblock content %}
-    
