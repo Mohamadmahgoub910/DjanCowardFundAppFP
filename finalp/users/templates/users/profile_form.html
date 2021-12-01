@@ -5,9 +5,9 @@
 <form method="post" action="{% url 'edit-account' %}">
     {% csrf_token %}
     {{form.as_p}}
-    <br><br><br>
     <center>
-        <input type="submit" name="Edit" value="Edit">
+        <input type="submit" name="Edit" value="Edit Account">
     </center>
+    <br><br><br>
 </form>
 {% endblock content %}
