@@ -30,7 +30,7 @@ def loginUser(request):
     page = 'login'
     # make some strict on the user
     if request.user.is_authenticated:
-        return redirect('projects')
+        return redirect('profiles')
     if request.method == "POST":
         # print(request.POST)
         # get the username and password  from form
@@ -40,13 +40,18 @@ def loginUser(request):
         # context = {'username': username, 'password': password}
         # if username == "Mahgoub" and password == "12345":
         # return redirect('projects')
+        try:
+            user = User.objects.get(username=username)
+        except:
+            messages.error(
+                request, 'username does not exist or password error')
         user = authenticate(request, username=username, password=password)
         if user is not None:
             # create a session
             login(request, user)
             return redirect('profiles')
         else:
-            messages.error(request, "sorry invalid data")
+            messages.error(request, "Invalid user or Password !")
     return render(request, 'users/login_register.html')
 
 
@@ -59,7 +64,7 @@ def logoutUser(request):
 
 
 # Register
-def registerUser(request):
+# def registerUser(request):
     page = 'register'
     form = CustomUserCreationForm()
 
@@ -69,6 +74,31 @@ def registerUser(request):
             user = form.save(commit=False)
             user.username = user.username.lower()
             user.save()
+
+            messages.success(request, 'User account was created!')
+
+            login(request, user)
+            # return redirect('edit-account')
+
+        else:
+            messages.success(
+                request, 'An error has occurred during registration')
+
+    context = {'page': page, 'form': form}
+    return render(request, 'users/login_register.html', context)
+
+
+def registerUser(request):
+    page = 'register'
+    form = CustomUserCreationForm()
+
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user = authenticate(username=user.username,
+                                password=user.password1)
 
             messages.success(request, 'User account was created!')
 
