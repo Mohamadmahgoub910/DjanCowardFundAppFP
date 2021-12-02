@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
 from users.models import Profile
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Project(models.Model):
@@ -11,7 +12,8 @@ class Project(models.Model):
         null=True, blank=True, default="default.jpg")
     demo_link = models.CharField(max_length=500, null=True, blank=True)
     source_link = models.CharField(max_length=500, null=True, blank=True)
-    total_budget = models.IntegerField(default=250000, null=True, blank=True)
+    total_budget = models.IntegerField(
+        default=250000, null=True, blank=True, validators=[MaxValueValidator(250000), MinValueValidator(1)])
     tags = models.ManyToManyField('Tag', blank=True)
     category = models.ManyToManyField('Category', blank=True)
     vote_total = models.IntegerField(default=0, null=True, blank=True)
@@ -23,6 +25,12 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+
+    def setBudget(self):
+        if self.total_budget <= 250000:
+            return self.total_budget
+        else:
+            return False
 
 
 class Review(models.Model):

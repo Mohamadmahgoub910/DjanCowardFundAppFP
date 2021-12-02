@@ -12,7 +12,7 @@
 
       <form class="form" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        
+        <h5>Keep watch that max total budget value is 250000 </h5>
         {% for field in form %}
        <!-- Input:Text -->
         <div class="form__field">
