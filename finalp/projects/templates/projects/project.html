@@ -20,7 +20,7 @@
 </table> -->
 <!-- Main Section -->
 <main class="projects">
-  <section class="hero-section text-center">
+  <section style="background-color: #cceeb8;" class="hero-section text-center">
     <div class="container container--narrow">
       <div class="hero-section__box">
         <h2>Search for <span>Projects</span></h2>
@@ -40,7 +40,7 @@
     </div>
   </section>
   <!-- Search Result: DevList -->
-  <section class="projectsList">
+  <section style="background-color: #C6D57E;" class="projectsList">
     <div class="container">
       <div class="grid grid--three">
         {% for items in projects %}
@@ -60,6 +60,14 @@
                   {% for tag in items.tags.all %}
                   <span class="tag tag--pill tag--main">
                     <small>{{tag}}</small>
+                  </span>
+                  {% endfor %}
+                </div>
+                <div class="project__tags">
+                  <span>Categories</span>
+                  {% for cat in items.category.all %}
+                  <span class="tag tag--pill tag--main">
+                    <small>{{cat}}</small>
                   </span>
                   {% endfor %}
                 </div>

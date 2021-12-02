@@ -1,15 +1,15 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<main class="home">
-    <section class="hero-section text-center">
+<main   class="home">
+    <section style="background-color: #112031;" class="hero-section text-center">
         <div class="container container--narrow">
             <div class="hero-section__box">
                 <h2>CONNECT WITH <span>DEVELOPERS</span></h2>
                 <h2>FROM AROUND THE WORLD</h2>
             </div>
 
-            <div class="hero-section__search">
+            <div   class="hero-section__search">
                 <form class="form" action="{% url 'profiles' %}" method="get">
                     <div class="form__field">
                         <label for="formInput#search">Search Developers </label>
@@ -23,7 +23,7 @@
         </div>
     </section>
     <!-- Search Result: DevList -->
-    <section class="devlist">
+    <section style="background-color: #8CA1A5;"class="devlist">
         <div class="container">
             <div class="grid grid--three">
 

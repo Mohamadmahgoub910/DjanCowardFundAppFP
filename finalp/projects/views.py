@@ -1,7 +1,6 @@
 from django.shortcuts import redirect, render
 from .forms import ProjectForm
-from .models import Project, Tag
-from django.db.models import Q
+from .models import Project
 # decorators loginrequire
 from django.contrib.auth.decorators import login_required
 from .utils import searchProjects
@@ -50,7 +49,8 @@ def singleproject(request, pk):
     proObj = Project.objects.get(id=pk)
     # get all tags in the projects
     tags = proObj.tags.all()
-    context = {'project': proObj, 'tags': tags}
+    category = proObj.category.all()
+    context = {'project': proObj, 'tags': tags, 'category': category}
     return render(request, 'projects/single-project.html', context)
 
 
