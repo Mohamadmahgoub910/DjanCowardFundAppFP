@@ -10,7 +10,11 @@ from .forms import CustomUserCreationForm, ProfileForm, SkillForm
 
 
 def profiles(request):
-    profiles = Profile.objects.all()
+    search_query = ''
+    if request.GET.get('search_query'):
+        search_query = request.GET.get('search_query')
+    print(f'search query {search_query} ')
+    profiles = Profile.objects.filter(name__icontains=search_query)
     context = {'profiles': profiles}
     return render(request, 'users/profiles.html', context)
 
