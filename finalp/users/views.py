@@ -1,20 +1,18 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Skill
 # messages
 from django.contrib import messages
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
+from .utils import searchProfiles
 # Create your views here.
 
 
 def profiles(request):
-    search_query = ''
-    if request.GET.get('search_query'):
-        search_query = request.GET.get('search_query')
-    print(f'search query {search_query} ')
-    profiles = Profile.objects.filter(name__icontains=search_query)
+    profiles = searchProfiles(request)
     context = {'profiles': profiles}
     return render(request, 'users/profiles.html', context)
 

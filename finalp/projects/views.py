@@ -1,9 +1,10 @@
 from django.shortcuts import redirect, render
 from .forms import ProjectForm
-from .models import Project
+from .models import Project, Tag
+from django.db.models import Q
 # decorators loginrequire
 from django.contrib.auth.decorators import login_required
-
+from .utils import searchProjects
 # some json data in a dict way :-
 listProjects = [
     {
@@ -31,7 +32,8 @@ def projects(request):
     # context = {'page': page, 'number': number, 'projects': listProjects}
 
     # gets all projects
-    projects = Project.objects.all()
+    projects = searchProjects(request)
+    # projects = Project.objects.all()
     context = {'projects': projects}
     return render(request, 'projects/project.html', context)
 
