@@ -43,7 +43,7 @@ def signup(request):
         if form.is_valid():
             user=form.save()
             auth_login(request,user,backend='django.contrib.auth.backends.ModelBackend')
-            return redirect('projects')
+            return redirect('edit-account')
     return render(request,'users/signup.html',{'form':form})
 
 

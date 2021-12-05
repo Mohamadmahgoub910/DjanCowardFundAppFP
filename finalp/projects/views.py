@@ -37,8 +37,11 @@ def projects(request):
     # context = {'page': page, 'number': number, 'projects': listProjects}
     # gets all projects
     projects = searchProjects(request)
+    projectcount=Project.objects.all().count()
     # projects = Project.objects.all()
-    context = {'projects': projects}
+    context = {'projects': projects,
+    'projectcount':projectcount
+    }
     return render(request, 'projects/project.html', context)
 
 
