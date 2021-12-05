@@ -68,3 +68,12 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+class Donation (models.Model):
+    donation_id = models.AutoField(primary_key=True)
+    id = models.ForeignKey(Project, on_delete=models.CASCADE)
+    donation_amount = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.donation_amount}"
+
