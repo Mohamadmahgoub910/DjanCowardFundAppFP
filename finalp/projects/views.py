@@ -1,9 +1,9 @@
 from django.shortcuts import redirect, render
-<<<<<<< HEAD
+
 from .forms import ProjectForm,DonateForm
-=======
+
 from .forms import ProjectForm, ReviewForm
->>>>>>> 8c20278d454c11126b34269138d207f01e5f5c39
+
 from .models import Project
 # decorators loginrequire
 from django.contrib import messages

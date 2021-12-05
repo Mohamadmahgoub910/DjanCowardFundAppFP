@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login as auth_login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import Profile
+
 # messages
 from django.contrib import messages
-from .forms import CustomUserCreationForm, ProfileForm, SkillForm
+from .forms import SignUpForm, ProfileForm, SkillForm
 from .utils import searchProfiles
 # Create your views here.
 
@@ -26,70 +27,6 @@ def userProfile(request, pk):
 
 
 # handle login
-def loginUser(request):
-    # one form for login if he is authenticated
-    page = 'login'
-    # make some strict on the user
-    if request.user.is_authenticated:
-        return redirect('profiles')
-    if request.method == "POST":
-        # print(request.POST)
-        # get the username and password  from form
-        username = request.POST['username']
-        password = request.POST['password']
-        # and store them in a context
-        # context = {'username': username, 'password': password}
-        # if username == "Mahgoub" and password == "12345":
-        # return redirect('projects')
-        try:
-            user = User.objects.get(username=username)
-        except:
-            messages.error(
-                request, 'username does not exist or password error')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            # create a session
-            login(request, user)
-            return redirect('profiles')
-        else:
-            messages.error(request, "Invalid user or Password !")
-    return render(request, 'users/login_register.html')
-
-
-# handle logout
-def logoutUser(request):
-    # destroy session
-    logout(request)
-    messages.error(request, "logged out ")
-    return redirect('login')
-
-
-# Register
-def registerUser(request):
-    page = 'register'
-    form = CustomUserCreationForm()
-
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.username = user.username.lower()
-            user.save()
-
-            messages.success(request, 'User account was created!')
-
-            login(request, user)
-            return redirect('edit-account')
-
-        else:
-            messages.success(
-                request, 'An error has occurred during registration')
-
-    context = {'page': page, 'form': form}
-    return render(request, 'users/login_register.html', context)
-
-
-@login_required(login_url='login')
 # make account profile
 def accountProfile(request):
     profile = request.user.profile
@@ -99,9 +36,20 @@ def accountProfile(request):
                'projects': projects}
     return render(request, 'users/account.html', context)
 
+def signup(request):
+    form=SignUpForm()
+    if request.method=='POST':
+        form=SignUpForm(request.POST)
+        if form.is_valid():
+            user=form.save()
+            auth_login(request,user,backend='django.contrib.auth.backends.ModelBackend')
+            return redirect('projects')
+    return render(request,'users/signup.html',{'form':form})
+
+
 
 # edit Profile
-@login_required(login_url='login')
+
 def editAccount(request):
     profile = request.user.profile
     form = ProfileForm(instance=profile)
@@ -114,7 +62,8 @@ def editAccount(request):
     return render(request, 'users/profile_form.html', context)
 
 
-@login_required(login_url='login')
+
+
 # AddSkill
 def createSkill(request):
     profile = request.user.profile
