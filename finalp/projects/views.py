@@ -1,5 +1,9 @@
 from django.shortcuts import redirect, render
+<<<<<<< HEAD
 from .forms import ProjectForm,DonateForm
+=======
+from .forms import ProjectForm, ReviewForm
+>>>>>>> 8c20278d454c11126b34269138d207f01e5f5c39
 from .models import Project
 # decorators loginrequire
 from django.contrib import messages
@@ -27,10 +31,10 @@ listProjects = [
 
 @login_required(login_url="login")
 def projects(request):
+
     # page = 'project.html'
     # number = 3
     # context = {'page': page, 'number': number, 'projects': listProjects}
-
     # gets all projects
     projects = searchProjects(request)
     # projects = Project.objects.all()
@@ -45,13 +49,23 @@ def singleproject(request, pk):
     # for i in listProjects:
     #     if i['id'] == pk:
     #         token = i
-
-    # get all details about each project
     proObj = Project.objects.get(id=pk)
+    form = ReviewForm()
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        review = form.save(commit=False)
+        review.project = proObj
+        review.owner = request.user.profile
+        review.save()
+        # update project vote count
+        proObj.getVoteCount
+        messages.success(request, 'ur review submitted')
+    # get all details about each project
     # get all tags in the projects
     tags = proObj.tags.all()
     category = proObj.category.all()
-    context = {'project': proObj, 'tags': tags, 'category': category}
+    context = {'project': proObj, 'tags': tags,
+               'category': category, 'form': form}
     return render(request, 'projects/single-project.html', context)
 
 

@@ -26,11 +26,27 @@ class Project(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ['-vote_ratio', '-vote_total', 'title']
+
+    @property
     def setBudget(self):
         if self.total_budget <= 250000:
             return self.total_budget
         else:
             return False
+        self.save()
+
+    @property
+    def getVoteCount(self):
+        reviews = self.review_set.all()
+        upVotes = reviews.filter(value='up').count()
+        totalVotes = reviews.count()
+
+        ratio = (upVotes/totalVotes) * 100
+        self.vote_total = totalVotes
+        self.vote_ratio = ratio
+        self.save()
 
 
 class Review(models.Model):
@@ -38,6 +54,7 @@ class Review(models.Model):
         ('up', 'Up Vote'),
         ('down', 'down Vote'),
     ]
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
     # foreign key
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     body = models.TextField(null=True, blank=True)
