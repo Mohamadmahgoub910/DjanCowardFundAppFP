@@ -54,6 +54,7 @@ def singleproject(request, pk):
         review.owner = request.user.profile
         review.save()
         # update project vote count
+        proObj.getVoteCount
         messages.success(request, 'ur review submitted')
     # get all details about each project
     # get all tags in the projects
