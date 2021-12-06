@@ -10,7 +10,7 @@ urlpatterns = [
     path('signup/',views.signup,name="signup"),
     path('account/', views.accountProfile, name='account'),
     path('changepassword/',auth_views.PasswordChangeView.as_view(template_name="users/change_password.html"),name="change_password"),
-    path('changepassword/done/',auth_views.PasswordChangeDoneView.as_view(template_name="users/change_password_done.html"),name="change_passworddone"),
+    path('changepassdone',views.changepassdone,name="changepassdone"),
     path('edit-account/', views.editAccount, name='edit-account'),
     path('create-skill/', views.createSkill, name='create-skill'),
     path('edit-skill/<str:pk>/', views.editSkill, name='edit-skill'),

@@ -47,6 +47,10 @@ def signup(request):
     return render(request,'users/signup.html',{'form':form})
 
 
+def changepassdone(request):
+    return render(request,'users/change_password_done.html')
+
+
 
 # edit Profile
 

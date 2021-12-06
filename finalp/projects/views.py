@@ -88,15 +88,19 @@ def createProject(request):
 
 @login_required(login_url="login")
 def createDonate(request):
+    project=None
     profile=request.user.profile
     formdonate=DonateForm()
     if request.method=='POST':
         formdonate=DonateForm(request.POST)
         if formdonate.is_valid():
-           project = formdonate.save(commit=False)
+           print(request.POST)
+           project = formdonate.save()
+           project.save()
            project.formdonate = profile
+           
            return redirect('projects')
-    context={'formdonate':formdonate}
+    context={'formdonate':formdonate,'project':project}
     return render(request,'projects/donateform.html',context)
 
 

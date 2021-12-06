@@ -59,12 +59,13 @@
                   <span style="font-weight: bold;">{{items.vote_ratio}}%</span> Positive
                   Feedback ({{items.vote_total}}) vote{{items.vote_total|pluralize:'s'}}
                 </p>
+              
                 <div>
-                  {% for donate in formdonate %}
-                  <span>{{donate}}</span>
-                  {% endfor %}
+              
+                  <span> donate:{{formdonate.donation_amount}}</span>
+                  
+                 
                 </div>
-
                 <div class="project__tags">
                   {% for tag in items.tags.all %}
                   <span class="tag tag--pill tag--main">
