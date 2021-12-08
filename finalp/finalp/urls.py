@@ -11,7 +11,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('projects.urls')),
     path('profiles/', include('users.urls')),
-    
+    path('api/auth/', include('authentication.urls')),
+
+
 ]
 # get images
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

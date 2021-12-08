@@ -6,20 +6,34 @@ from .models import Profile, Skill
 from django import forms
 
 
-
 class SignUpForm(UserCreationForm):
-    email = forms.CharField(max_length=255,required=True,widget=forms.EmailInput())
+    email = forms.CharField(max_length=255, required=True,
+                            widget=forms.EmailInput())
 
     class Meta:
-        model=User
-        fields = {'username','email','password1','password2'}
+        model = User
+        fields = {'username', 'email', 'password1', 'password2'}
 
-        
     def __init__(self, *args, **kwargs):
         super(SignUpForm, self).__init__(*args, **kwargs)
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'input'})
     # self.fields['title'].widgets.attrs.update({'class':'input'})
+
+
+# class CustomUserCreationForm(UserCreationForm):
+#     class Meta:
+#         model = User
+#         fields = ['username',
+#                   'email', 'password1', 'password2']
+#         labels = {'first_name': 'Name', }
+# # username , password , email , flag a superuser
+
+#     def __init__(self, *args, **kwargs):
+#         super(CustomUserCreationForm, self).__init__(*args, **kwargs)
+#         for name, field in self.fields.items():
+#             field.widget.attrs.update({'class': 'input'})
+#     # self.fields['title'].widgets.attrs.update({'class':'input'})
 
 
 # make edit profile as a form dynamic

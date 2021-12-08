@@ -43,9 +43,11 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'allauth',
     'django.contrib.sites',
-    
+    'rest_framework',
+    'authentication.apps.AuthenticationConfig',
+
 ]
-SITE_ID=1
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -167,7 +169,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 LOGOUT_REDIRECT_URL = 'projects'
 LOGIN_REDIRECT_URL = 'projects'
-LOGIN_URL= 'login'
+LOGIN_URL = 'login'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
