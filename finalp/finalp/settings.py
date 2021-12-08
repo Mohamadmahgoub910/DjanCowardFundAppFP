@@ -47,6 +47,15 @@ INSTALLED_APPS = [
     'authentication.apps.AuthenticationConfig',
 
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'authentication.backends.JWTAuthentication',
+    )
+}
+
+
 SITE_ID = 1
 
 MIDDLEWARE = [
@@ -164,6 +173,9 @@ STATICFILES_DIRS = [
 # Media Root
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+JWT_SECRET_KEY = os.environ.get('JWT_SECRET_KEY')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
