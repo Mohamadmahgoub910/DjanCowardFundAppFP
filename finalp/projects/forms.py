@@ -1,6 +1,11 @@
+
+from django.db import models
+from django.forms import ModelForm, widgets
+from .models import Project,Donation
 from django.db.models import fields
 from django.forms import ModelForm
 from .models import Project, Review
+
 from django import forms
 
 
@@ -21,6 +26,15 @@ class ProjectForm(ModelForm):
             field.widget.attrs.update({'class': 'input'})
     # self.fields['title'].widgets.attrs.update({'class':'input'})
 
+
+
+class DonateForm(forms.ModelForm):
+    class Meta:
+        model=Donation
+        fields=['donation_id','id','donation_amount']
+      
+    def __init__(self, *args, **kwargs):
+        super(DonateForm, self).__init__(*args, **kwargs)
 
 # Review
 class ReviewForm(ModelForm):

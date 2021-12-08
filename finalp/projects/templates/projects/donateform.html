@@ -1,0 +1,33 @@
+{% extends 'main.html' %}
+{% load static%}
+{% block content%}
+    
+<div  class="wrapper">
+
+    <!-- Content Wrapper. Contains page content -->
+    <div   class="content-wrapper">
+      <!-- Content Header (Page header) -->
+  <div  class="form-control">
+      <div class="card-header">
+        <h3 class="card-title">Add donate</h3>
+      </div>
+      <!-- /.card-header -->
+      <!-- form start -->
+      <form  method="POST" enctype="multipart/form-data">
+      {%csrf_token%}
+      {% for feild in formdonate %}
+        <div class="card-body">
+           {{feild}}
+          {% endfor %}
+        </div>
+        <!-- /.card-body -->
+  
+        <div class="card-footer">
+          <button type="submit" class="btn btn-success">Add donate</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+
+{% endblock%}

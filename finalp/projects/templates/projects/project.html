@@ -23,7 +23,9 @@
   <section style="background-color: #cceeb8;" class="hero-section text-center">
     <div class="container container--narrow">
       <div class="hero-section__box">
+        <h2>Number of Projects <span>{{projectcount}}</span></h>
         <h2>Search for <span>Projects</span></h2>
+        
       </div>
 
       <div class="hero-section__search">
@@ -40,10 +42,12 @@
     </div>
   </section>
   <!-- Search Result: DevList -->
+ 
   <section style="background-color: #C6D57E;" class="projectsList">
     <div class="container">
       <div class="grid grid--three">
-        {% for items in projects %}
+        {% for items in projects|slice:'6' %}
+      
         <div class="column">
           <div class="card project">
             <a href="{% url 'project' items.id  %}" class="project">
@@ -55,7 +59,13 @@
                   <span style="font-weight: bold;">{{items.vote_ratio}}%</span> Positive
                   Feedback ({{items.vote_total}}) vote{{items.vote_total|pluralize:'s'}}
                 </p>
-
+              
+                <div>
+              
+                  <span> donate:{{formdonate.donation_amount}}</span>
+                  
+                 
+                </div>
                 <div class="project__tags">
                   {% for tag in items.tags.all %}
                   <span class="tag tag--pill tag--main">
@@ -81,8 +91,10 @@
           </div>
         </div>
         {% endfor %}
+       
       </div>
     </div>
   </section>
+ 
 </main>
 {% endblock content %}

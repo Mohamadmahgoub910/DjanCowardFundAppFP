@@ -1,5 +1,9 @@
 from django.shortcuts import redirect, render
+
+from .forms import ProjectForm,DonateForm
+
 from .forms import ProjectForm, ReviewForm
+
 from .models import Project
 # decorators loginrequire
 from django.contrib import messages
@@ -33,8 +37,11 @@ def projects(request):
     # context = {'page': page, 'number': number, 'projects': listProjects}
     # gets all projects
     projects = searchProjects(request)
+    projectcount=Project.objects.all().count()
     # projects = Project.objects.all()
-    context = {'projects': projects}
+    context = {'projects': projects,
+    'projectcount':projectcount
+    }
     return render(request, 'projects/project.html', context)
 
 
@@ -78,6 +85,23 @@ def createProject(request):
             return redirect('projects')
     context = {'form': form}
     return render(request, 'projects/project-form.html', context)
+
+@login_required(login_url="login")
+def createDonate(request):
+    project=None
+    profile=request.user.profile
+    formdonate=DonateForm()
+    if request.method=='POST':
+        formdonate=DonateForm(request.POST)
+        if formdonate.is_valid():
+           print(request.POST)
+           project = formdonate.save()
+           project.save()
+           project.formdonate = profile
+           
+           return redirect('projects')
+    context={'formdonate':formdonate,'project':project}
+    return render(request,'projects/donateform.html',context)
 
 
 @login_required(login_url="login")
